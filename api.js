@@ -34,7 +34,7 @@ app.get('/ping', (req, res) => {
   res.send('OK')
 })
 
-const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3086
+const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000
 app.listen(PORT, '0.0.0.0', (err) => {
   if (err) {
     console.log(err)

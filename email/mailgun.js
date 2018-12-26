@@ -18,11 +18,11 @@ const sendMailgunEmail = (email, subject, msg, callback) => {
       protocol: 'https:',
       hostname: 'api.mailgun.net',
       method: 'POST',
-      path: `/v3/${config.mailgun.domainName}/messages`,
-      auth: `api:${config.mailgun.apiKey}`,
+      path: `/v3/${config.domainName}/messages`,
+      auth: `api:${config.apiKey}`,
       data: {
         from: email,
-        to: config.mailgun.emailTo,
+        to: config.emailTo,
         subject: subject,
         text: msg,
         html: htmlMsg

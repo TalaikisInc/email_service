@@ -12,5 +12,6 @@ module.exports.config = {
   domainName: process.env.EMAIL_DOMAIN,
   apiKey: process.env.MAILGUN_API_KEY,
   emailTo: process.env.MAIL_TO,
-  clientKey: process.env.REACT_APP_API_KEY
+  clientKey: process.env.REACT_APP_API_KEY,
+  emailProvider: 'mailgun'
 }
