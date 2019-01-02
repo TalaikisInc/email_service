@@ -1,4 +1,6 @@
 import express from 'express'
+import legit from 'legit'
+
 import { sendEmail } from './email'
 import { config } from './config'
 const app = express()
@@ -15,18 +17,30 @@ app.post('/contactus', (req, res) => {
   const msg = typeof req.body.msg === 'string' ? req.body.msg : false
   const name = typeof req.body.name === 'string' ? req.body.name : false
   const validKey = req.body.key ? req.body.key === config.clientKey : false
-  if (email && msg && name && validKey) {
-    const subject = `Message from identiForm: ${name}`
-    sendEmail(email, subject, msg, (err) => {
-      res.setHeader('Content-Type', 'application/json')
-      if (!err.error) {
-        res.end(JSON.stringify({ status: 'sent' }))
-      } else {
-        res.end(JSON.stringify({ status: 'error' }))
-      }
-    })
+  if (validKey) {
+    if (email && msg && name) {
+      legit(email).then((response) => {
+          if (response.isValid) {
+            const subject = `Message from: ${name}`
+            sendEmail(email, subject, msg, (err) => {
+              res.setHeader('Content-Type', 'application/json')
+              if (!err.error) {
+                res.end(JSON.stringify({ status: 'sent' }))
+              } else {
+                res.end(JSON.stringify({ status: `Error sending email: ${err.error}` }))
+              }
+            })
+          } else {
+            res.end(JSON.stringify({ status: 'Email is not valid, cannot proceed.' }))
+          }
+        }).catch((err) => {
+          res.end(JSON.stringify({ status: `Error checking email validity: ${err.error}` }))
+        })
+    } else {
+      res.end(JSON.stringify({ status: 'Not all required fields entered.' }))
+    }
   } else {
-    res.end(JSON.stringify({ status: 'error' }))
+    res.end(JSON.stringify({ status: 'Wrong key.' }))
   }
 })
 

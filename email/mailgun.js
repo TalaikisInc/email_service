@@ -36,6 +36,7 @@ const sendMailgunEmail = (email, subject, msg, callback) => {
       if (!err) {
         callback(false)
       } else {
+        console.log(err)
         callback(err)
       }
     })
