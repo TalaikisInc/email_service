@@ -1,4 +1,3 @@
-
 require('dotenv').config({ path: './.env' })
 const { strictEqual } = require('assert')
 strictEqual(typeof process.env.TLS_EMAIL, 'string')
