@@ -9,7 +9,8 @@ COPY ./ ./
 RUN npm i
 
 ENV NODE_ENV production 
-ENV PORT 3001
-EXPOSE 3001
+ENV PORT 3000
+EXPOSE 3000
+USER node
 
 CMD ["pm2-runtime", "start.js"]

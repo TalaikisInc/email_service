@@ -1,6 +1,10 @@
 # Simple Mail API Service
 
-Note, currently confrigured only for contact us and also has /ping to check health.
+## Features
+
+* Contact us microservice (Mailgun)
+* Checks if email exists
+* Internationalized
 
 ## Quick start
 

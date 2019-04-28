@@ -3,21 +3,25 @@ import legit from 'legit'
 
 import { sendEmail } from './email'
 import { config } from './config'
+import { t, setLocale } from './translations'
 const app = express()
-require('@babel/polyfill')
 require('dotenv').config({ path: './.env' })
 
 app.use(require('compression')())
 app.use(require('body-parser').json())
-
 app.use(require('cors')())
 
 app.post('/contactus', (req, res) => {
   const email = typeof req.body.email === 'string' ? req.body.email : false
   const msg = typeof req.body.msg === 'string' ? req.body.msg : false
   const name = typeof req.body.name === 'string' ? req.body.name : false
+  const locale = typeof req.body.locale === 'string' ? req.body.locale : 'en'
   const validKey = req.body.key ? req.body.key === config.clientKey : false
   if (validKey) {
+    if (locale !== 'en') {
+      setLocale(locale)
+    }
+
     if (email && msg && name) {
       legit(email).then((response) => {
           if (response.isValid) {
@@ -27,20 +31,20 @@ app.post('/contactus', (req, res) => {
               if (!err.error) {
                 res.end(JSON.stringify({ status: 'sent' }))
               } else {
-                res.end(JSON.stringify({ status: `Error sending email: ${err.error}` }))
+                res.end(JSON.stringify({ status: t('send_error', { error: err.error }) }))
               }
             })
           } else {
-            res.end(JSON.stringify({ status: 'Email is not valid, cannot proceed.' }))
+            res.end(JSON.stringify({ status: t('email_error') }))
           }
         }).catch((err) => {
-          res.end(JSON.stringify({ status: `Error checking email validity: ${err.error}` }))
+          res.end(JSON.stringify({ status: t('email_check_error', { error: err.message }) }))
         })
     } else {
-      res.end(JSON.stringify({ status: 'Not all required fields entered.' }))
+      res.end(JSON.stringify({ status: t('error_required') }))
     }
   } else {
-    res.end(JSON.stringify({ status: 'Wrong key.' }))
+    res.end(JSON.stringify({ status: t('unauthorized') }))
   }
 })
 
