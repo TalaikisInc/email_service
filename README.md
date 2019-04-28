@@ -6,9 +6,10 @@
 * Checks if email exists
 * Internationalized
 
-## Quick start
+## Quick start with Docker
 
 ```bash
+# Edit .env
 ./build.sh
 ./start.sh
 ```
