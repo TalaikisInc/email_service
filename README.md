@@ -50,6 +50,6 @@ const contactApi = (name, email, message, done) => {
 ## API Responses
 
 ```json
-{ "status": "sent" } // if email is sent successfullly
+{ "status": "sent" } // if email is sent successfully
 { "status": "<some error>" } // if some error occurs
 ```
