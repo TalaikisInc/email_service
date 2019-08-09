@@ -1,3 +1,4 @@
+import { join } from 'path'
 import express from 'express'
 import legit from 'legit'
 
@@ -10,6 +11,14 @@ require('dotenv').config({ path: './.env' })
 app.use(require('compression')())
 app.use(require('body-parser').json())
 app.use(require('cors')())
+
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(join(__dirname, 'static', 'favicon.ico'))
+})
+
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, 'static', 'index.html'))
+})
 
 app.post('/contactus', (req, res) => {
   const email = typeof req.body.email === 'string' ? req.body.email : false

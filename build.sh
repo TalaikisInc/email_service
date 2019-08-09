@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t mail .
+docker build --no-cache -t mail .
