@@ -16,3 +16,40 @@
 # On reload:
 ./reload.sh
 ```
+
+## Sample request
+
+```js
+import { post } from 'axios'
+
+const contactApi = (name, email, message, done) => {
+  const locale = 'en'
+  const CONTACT_API_KEY = ''
+  const CONTACT_API_URL = ''
+
+  post(CONTACT_API_URL, {
+    method: 'POST',
+    msg: message,
+    key: CONTACT_API_KEY,
+    locale,
+    name,
+    email,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((data) => {
+      done(null, data.data)
+    })
+    .catch((err) => {
+      done({ error: err.message })
+    })
+}
+```
+
+## API Responses
+
+```json
+{ status: 'sent' } // if email is sent successfullly
+{ status: <some error> } // if some error occurs
+```

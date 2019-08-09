@@ -38,7 +38,7 @@ app.post('/contactus', (req, res) => {
             sendEmail(email, subject, msg, (err) => {
               res.setHeader('Content-Type', 'application/json')
               if (!err.error) {
-                res.end(JSON.stringify({ status: 'sent' }))
+                res.end(JSON.stringify({ status: 'sent' })) // don't translate this
               } else {
                 res.end(JSON.stringify({ status: t('send_error', { error: err.error }) }))
               }
