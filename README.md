@@ -2,14 +2,17 @@
 
 ## Features
 
-* Contact us microservice (Mailgun)
+* Contact us microservice (on Mailgun)
 * Checks if email exists
 * Internationalized
 
 ## Quick start with Docker
 
 ```bash
-# Edit .env
+# Edit .env and ports on start.sh
 ./build.sh
 ./start.sh
+
+# On reload:
+./reload.sh
 ```
